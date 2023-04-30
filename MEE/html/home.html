@@ -1,0 +1,172 @@
+<html>
+<head>
+    <title>Attendance Management System</title>
+</head>
+<style>
+    *{
+        padding : 0px;
+        margin : 0px;
+        color : #ff;
+        background : #001;
+    }
+        .search{
+        display : flex;
+        justify-content : center;
+        align-items : center;
+        float : right;
+        position : relative;
+        top : 10px;
+        margin : 30px;
+    }
+    .query{
+        background : #fff;
+        border-bottom : 1px solid #555;
+        text-align : center;
+        font-size : 17px;
+    }
+    .query:focus, .query:hover{
+        border-bottom : 0.1px solid orange;
+    }
+    input[type = "submit"]{
+        display : none;
+    }
+    .circle{
+        display : block;
+        background : transparent;
+        width : 20px;
+        height : 20px;
+        border-radius : 50%;
+        border : 1px solid #fff;
+    }
+    label{
+        cursor : pointer;
+    }
+    .line{
+        display : block;
+        position : relative;
+        top : 3px;
+        left : 16px;
+        width : 15px;
+        height : 0.05px;
+        border : 0.05px solid #fff;
+        background : #001;
+		transform: rotateZ(47deg);
+    }
+    .circle:hover, .circle:focus{
+        border-color : orange;
+    }
+    .data{
+        display : flex;
+        justify-content : center;
+        align-items : center;
+        flex-direction : column;
+        position : relative;
+        top : 100px;
+
+    }
+    .item{
+        display : flex;
+        align-items : center;
+        margin : 15px;
+        border : 1px solid #333;
+        width : 300px;
+        border-radius : 15px;
+    }
+    .item:hover{
+        border-color : orange;
+    }
+    .name{
+        font-size : 21px;
+        color : #fff;
+        margin : 10px;
+        float : left;
+        font-weight : 400;
+    }
+    .present{
+        color : #0f0;
+        font-size : 19px;
+        position : absolute;
+        right : 445px;
+    }
+    .absent{
+        color : #f00;
+        font-size : 19px;
+        position : absolute;
+        right : 445px;
+    }
+    .not_found{
+        display : flex;
+        justify-content : center;
+        align-items : center;
+        position : relative;
+        top : 300px;
+        left : 50px;
+    }
+    .missing{
+        color : #AEA;
+        font-size : 25px;
+    }
+    .date{
+        color : #e33;
+        font-size : 25px;
+        margin-left : 12px;
+    }
+    .found{
+        color : #fff;
+        font-size : 31px;
+        color : cyan;
+        position : relative;
+        left : 215px;
+        top : 50px;
+    }
+    a{
+        position : relative;
+        top : 50px;
+        text-decoration : none;
+        border : 0.5px solid #AEA;
+        padding : 15px;
+        color : #fff;
+        font-size : 19px;
+        border-radius : 10px;
+    }
+    a:hover{
+        border-color : orange;
+    }
+    .found:hover{
+        color : #AEA;
+    }
+</style>
+<body>
+    <a href="admin">Admin Panel</a>
+    <form action="" method="post" class="search">
+              {% csrf_token %}
+              <input type="date" placeholder="Search date" class="query" name="query">
+              <label>
+                  <input type="submit">
+                  <span class="circle"></span>
+                  <span class="line"></span>
+              </label>
+    </form>
+    {% if flag %}
+        <span class="found">Attendance Details on {{date}}</span>
+        <div class="data">
+            {% for item in data %}
+                <div class="item">
+                    <span class="name">{{item.name}}</span>
+                    {% if item.present %}
+                        <span class="present">Present</span>
+                    {% else %}
+                        <span class="absent">Absent</span>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if flag1 %}
+        <div class="not_found">
+            <span class="missing">No classes on </span>
+            <span class="date"> {{date}}</span>
+        </div>
+    {% endif %}
+</body>
+</html>
